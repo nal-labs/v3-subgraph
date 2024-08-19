@@ -58,5 +58,11 @@
       "address": "0x8FdA5a7a8dCA67BBcDd10F02Fa0649A937215422",
       "startBlock": 12637075
     }
+  },
+  "nal-sepolia": {
+    "Factory": {
+      "address": "0x342b695606d707E5AF6CaA2b6503763038958BA7",
+      "startBlock": 3338813
+    }
   }
 }

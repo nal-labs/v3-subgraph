@@ -14,6 +14,7 @@ export enum ChainId {
   MATIC = 137,
   OPTIMISM = 10,
   ZKSYNC_ERA = 324,
+  NAL_SEPOLIA = 328527624,
 }
 
 // subgraph does not support string enums, hence these constants
@@ -27,6 +28,7 @@ const MAINNET_NETWORK_NAME = 'mainnet'
 const MATIC_NETWORK_NAME = 'matic'
 const OPTIMISM_NETWORK_NAME = 'optimism'
 const ZKSYNC_ERA_NETWORK_NAME = 'zksync-era'
+const NAL_SEPOLIA_NETWORK_NAME = 'nal-sepolia'
 
 // Note: All token and pool addresses should be lowercased!
 export class SubgraphConfig {
@@ -385,6 +387,33 @@ export function getSubgraphConfig(): SubgraphConfig {
           symbol: 'USDC.e',
           name: 'Bridged USDC (zkSync)',
           decimals: BigInt.fromI32(6),
+        },
+      ],
+      poolsToSkip: [],
+      poolMappings: [],
+    }
+  } else if (selectedNetwork == NAL_SEPOLIA_NETWORK_NAME) {
+    return {
+      factoryAddress: '0x342b695606d707E5AF6CaA2b6503763038958BA7',
+      stablecoinWrappedNativePoolAddress: '0x5D9Dd39A7EFC5Ee0eF2814CB00891Ea3c4FC56f0', // USDT-WETH 0.01% pool
+      stablecoinIsToken0: false,
+      wrappedNativeAddress: '0x4200000000000000000000000000000000000006', // WETH
+      minimumNativeLocked: BigDecimal.fromString('10'),
+      stablecoinAddresses: [
+        '0xe3b1a545130163ff977e06bcbae9bc55ec7ddaf6', // USDC
+        '0xe4f926348d533d2b20857bd4d96ba92a4ceb9c15', // USDT
+      ],
+      whitelistTokens: [
+        '0x4200000000000000000000000000000000000006', // WETH
+        '0xe3b1a545130163ff977e06bcbae9bc55ec7ddaf6', // USDC
+        '0xe4f926348d533d2b20857bd4d96ba92a4ceb9c15', // USDT
+      ],
+      tokenOverrides: [
+        {
+          address: Address.fromString('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'),
+          symbol: 'WETH',
+          name: 'Wrapped Ethereum',
+          decimals: BigInt.fromI32(18),
         },
       ],
       poolsToSkip: [],
