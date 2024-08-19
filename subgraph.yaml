@@ -11,9 +11,9 @@ dataSources:
     name: Factory
     network: mainnet
     source:
-      address: '0x1F98431c8aD98523631AE4a59f267346ea31F984'
+      address: '0x342b695606d707E5AF6CaA2b6503763038958BA7'
       abi: Factory
-      startBlock: 12369621
+      startBlock: 3338814
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -36,6 +36,39 @@ dataSources:
       eventHandlers:
         - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
           handler: handlePoolCreated
+  - kind: ethereum/contract
+    name: NonfungiblePositionManager
+    network: optimism
+    source:
+      address: '0xA3D31f8987c2278581f6ADE2a95DCCFA85C5222a'
+      abi: NonfungiblePositionManager
+      startBlock: 3338835
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/position-manager.ts
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: Pool
+          file: ./abis/pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleIncreaseLiquidity
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: handleCollect
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
 templates:
   - kind: ethereum/contract
     name: Pool
